@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Encontre sua Célula</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    #sorteio {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 20px;
+      height: 40px;
+    }
+  </style>
+</head>
+<body class="p-4">
+
+  <h1>Encontrei a sua célula aqui</h1>
+
+  <form id="form">
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="tel">Telefone</label>
+      <input type="tel" id="tel" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="cep">CEP</label>
+      <input type="text" id="cep" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-outline-success">Enviar</button>
+  </form>
+
+  <h2 class="mt-5">Células perto de você</h2>
+  <div id="sorteio"></div>
+
+  <script>
+    const celulas = [
+      "Célula Vida Nova",
+      "Célula Sementes",
+      "Célula Ágape",
+      "Célula Recomeço",
+      "Célula Avivamento",
+      "Célula Raízes",
+      "Célula Aliança",
+      "Célula Esperança"
+    ];
+
+    const cepInput = document.getElementById("cep");
+    const sorteioEl = document.getElementById("sorteio");
+
+    let intervalo;
+
+    cepInput.addEventListener("input", () => {
+      if (cepInput.value.length >= 8) {
+        iniciarSorteio();
+      }
+    });
+
+    function iniciarSorteio() {
+      clearInterval(intervalo);
+
+      let count = 0;
+      intervalo = setInterval(() => {
+        const index = Math.floor(Math.random() * celulas.length);
+        sorteioEl.textContent = celulas[index];
+        count++;
+
+        if (count > 20) {
+          clearInterval(intervalo);
+          // Aqui você pode usar a lógica real baseada no CEP
+          const finalIndex = Math.floor(Math.random() * celulas.length);
+          sorteioEl.textContent = "🏡 " + celulas[finalIndex];
+        }
+      }, 100);
+    }
+  </script>
+
+</body>
+</html>

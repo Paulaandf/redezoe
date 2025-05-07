@@ -1,0 +1,35 @@
+* {
+  margin: 10;
+  padding: 10;
+  box-sizing: border-box;
+}
+
+header {
+  width: 100%;
+  background-color: black;
+  padding: 30px 0;
+  text-align: center;
+}
+
+header h1 {
+  color: purple;
+  font-size: 60px;
+  font-weight: bold;
+  margin: 10;
+}
+
+.carousel-img {
+  max-height: 350px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-size: 70% 70%;
+}
+
+footer a:hover {
+  text-decoration: none;
+  opacity: 0.8;
+}

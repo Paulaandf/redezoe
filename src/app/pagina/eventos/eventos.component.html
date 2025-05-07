@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Agenda de Eventos</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-image: url('https://via.placeholder.com/1920x1080'); /* Substitua pela URL da sua imagem */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.9); /* Fundo branco translúcido sobre a imagem */
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .event-box {
+      max-width: 900px;
+      margin: 50px auto;
+    }
+
+    .event {
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+
+<div class="event-box overlay">
+  <h3 class="text-center mb-4">Agenda de Eventos</h3>
+
+  <!-- Evento 1 -->
+  <div class="event">
+    <h5>Conferencia LEGACS- 15/06/2025</h5>
+    <p>Um dia especial com ministração, louvor e comunhão. Local: Igreja Central. Horário: 14h às 20h.</p>
+
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nome1">Nome</label>
+          <input type="text" class="form-control" id="nome1" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="email1">Email</label>
+          <input type="email" class="form-control" id="email1" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="tel1">Telefone</label>
+        <input type="tel" class="form-control" id="tel1" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Inscrever-se</button>
+      <button type="button" class="btn btn-success float-right">Pagar</button>
+    </form>
+  </div>
+
+  <!-- Evento 2 -->
+  <div class="event">
+    <h5>Acampadentro - 30/06/2025</h5>
+    <p>Noite com dinâmicas, Palavra e vigília. Traga sua Bíblia e seu colchão!</p>
+
+    <form>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="nome2">Nome</label>
+          <input type="text" class="form-control" id="nome2" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="email2">Email</label>
+          <input type="email" class="form-control" id="email2" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="tel2">Telefone</label>
+        <input type="tel" class="form-control" id="tel2" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Inscrever-se</button>
+      <button type="button" class="btn btn-success float-right">Pagar</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
