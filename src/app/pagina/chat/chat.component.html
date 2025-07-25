@@ -1,74 +1,49 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Chat</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    .chat-box {
-      max-width: 600px;
-      margin: 30px auto;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 15px;
-      background-color: #f9f9f9;
-    }
-    .messages {
-      height: 300px;
-      overflow-y: auto;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 10px;
-      background-color: #fff;
-      margin-bottom: 15px;
-    }
-    .message {
-      margin-bottom: 10px;
-    }
-    .message.user {
-      text-align: right;
-    }
-    .message-text {
-      display: inline-block;
-      padding: 8px 12px;
-      border-radius: 20px;
-      background-color: #e1f5fe;
-    }
-    .message.user .message-text {
-      background-color: #c8e6c9;
-    }
-  </style>
-</head>
-<body>
+<div class="devocional-box container my-5">
+  <h3 class="text-center mb-4 text-primary fw-bold">📖 Devocional Diário</h3>
 
-<div class="chat-box">
-  <h4 class="text-center">Iniciar um novo Chat</h4>
-  
-  <div class="messages">
-    <div class="message">
-      <div class="message-text">Olá, posso te ajudar?</div>
+  <form (ngSubmit)="salvarDevocional()">
+    <div class="form-group mb-3">
+      <label>Seu Nome</label>
+      <input type="text" class="form-control" [(ngModel)]="devocional.nome" name="nome" required>
     </div>
-    <div class="message user">
-      <div class="message-text">Oi, preciso de informações.</div>
+
+    <div class="form-group mb-3">
+      <label>Deseja convidar um amigo?</label>
+      <input type="text" class="form-control" [(ngModel)]="devocional.amigo" name="amigo" placeholder="Nome do amigo (opcional)">
+    </div>
+
+  
+
+
+    <div class="form-group mb-3">
+      <label>Reflexão do Dia</label>
+      <textarea class="form-control" [(ngModel)]="devocional.reflexao" name="reflexao" rows="4" required></textarea>
+    </div>
+
+    <div class="form-group mb-3">
+      <label>Versículo do Dia</label>
+      <div class="versiculo-box p-3 border rounded bg-light">
+        <strong>{{ versiculo.referencia }}</strong><br>
+        <em>"{{ versiculo.texto }}"</em>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">Salvar Devocional</button>
+  </form>
+
+  <div *ngIf="mensagem" class="alert alert-success text-center mt-3">{{ mensagem }}</div>
+
+  <hr class="my-4">
+
+  <h5 class="text-center">🗂️ Histórico de Devocionais</h5>
+  <div *ngIf="historico.length === 0" class="text-center text-muted">Nenhum devocional salvo ainda.</div>
+
+  <div *ngFor="let item of historico" class="card mt-3">
+    <div class="card-body">
+      <h6><strong>{{ item.data }}</strong> - {{ item.nome }}</h6>
+      <p><em>{{ item.reflexao }}</em></p>
+      <small *ngIf="item.amigo">Feito com: {{ item.amigo }}</small>
     </div>
   </div>
-
-  <form action="">
-    <div class="form-group">
-      <label for="nome">Nome</label>
-      <input type="text" id="nome" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="tel">Telefone</label>
-      <input type="tel" id="tel" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="mensagem">Digite a sua mensagem</label>
-      <textarea id="mensagem" class="form-control" rows="2"></textarea>
-    </div>
-    <button type="submit" class="btn btn-success btn-block">Enviar</button>
-  </form>
 </div>
 
-</body>
-</html>

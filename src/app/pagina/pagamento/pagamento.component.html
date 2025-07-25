@@ -1,0 +1,33 @@
+<form formGroup="pagamentoForm" (ngSubmit)="pagarPix()" class="container mt-4">
+  <h3>Pagamento de Evento</h3>
+
+  <div class="mb-3">
+    <label class="form-label">Nome do Evento</label>
+    <input class="form-control" formControlName="nomeEvento" type="text">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Data do Evento</label>
+    <input class="form-control" formControlName="dataEvento" type="date">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Valor (R$)</label>
+    <input class="form-control" formControlName="valor" type="number">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Parcelas</label>
+    <select class="form-select" formControlName="parcelas">
+      <option ngFor="let p of opcoesParcelas" [value]="p">
+        {{ p }}x
+      </option>
+    </select>
+  </div>
+
+  <button class="btn btn-success w-100" type="submit">Pagar com PIX</button>
+
+  <div class="alert alert-info mt-3" ngIf="mensagem">{{ mensagem }}</div>
+</form>
+
+

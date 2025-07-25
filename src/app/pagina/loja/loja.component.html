@@ -1,90 +1,137 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Loja - Produtos Cristãos</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    body {
-      background-image: url('https://via.placeholder.com/1920x1080'); /* Substitua pela imagem de fundo desejada */
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-    }
+<div class="overlay-modern container py-5">
+  <h3 class="text-center mb-5 text-primary fw-bold">🛍️ Loja Zoe - Produtos Cristãos</h3>
 
-    .overlay {
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 15px;
-      max-width: 1000px;
-      margin: 50px auto;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .product {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 25px;
-      background-color: #fff;
-    }
-
-    .product img {
-      max-width: 100%;
-      border-radius: 8px;
-    }
-
-    .product-title {
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-
-<div class="overlay">
-  <h3 class="text-center mb-4">Loja G&P - Produtos Cristãos</h3>
-
-  <!-- Produto 1 - Camiseta -->
-  <div class="product row">
+  <div class="product row g-4" *ngFor="let produto of produtos; let i = index">
     <div class="col-md-4">
-      <img src="https://via.placeholder.com/300x300?text=Camiseta" alt="Camiseta Cristã">
+      <img [src]="produto.imagem" [alt]="produto.nome" class="img-fluid rounded shadow">
     </div>
-    <div class="col-md-8">
-      <h5 class="product-title">Camiseta Fé Inabalável</h5>
-      <p>Camiseta 100% algodão com estampa cristã. Tamanhos P, M, G, GG.</p>
-      <p><strong>R$ 49,90</strong></p>
-      <button class="btn btn-success">Comprar</button>
-    </div>
-  </div>
 
-  <!-- Produto 2 - Bíblia -->
-  <div class="product row">
-    <div class="col-md-4">
-      <img src="https://via.placeholder.com/300x300?text=Bíblia" alt="Bíblia Sagrada">
-    </div>
     <div class="col-md-8">
-      <h5 class="product-title">Bíblia de Estudo Jovem</h5>
-      <p>Edição especial com linguagem atualizada e comentários para jovens. Capa dura.</p>
-      <p><strong>R$ 89,90</strong></p>
-      <button class="btn btn-success">Comprar</button>
-    </div>
-  </div>
+      <div class="card border-0 shadow-sm p-4 rounded-4">
+        <h4 class="fw-semibold mb-2">{{ produto.nome }}</h4>
+        <p class="text-muted">{{ produto.descricao }}</p>
+        <p class="text-success h5">R$ {{ produto.preco | number:'1.2-2' }}</p>
 
-  <!-- Produto 3 - Caneca -->
-  <div class="product row">
-    <div class="col-md-4">
-      <img src="https://via.placeholder.com/300x300?text=Caneca" alt="Caneca cristã">
-    </div>
-    <div class="col-md-8">
-      <h5 class="product-title">Caneca "Mais amor, mais fé"</h5>
-      <p>Caneca personalizada com frase inspiradora. 350ml.</p>
-      <p><strong>R$ 29,90</strong></p>
-      <button class="btn btn-success">Comprar</button>
-    </div>
-  </div>
+        <button class="btn btn-outline-primary w-100 my-3" (click)="selecionarProduto(produto, i)">
+          {{ produtoSelecionadoIndex === i ? 'Fechar' : 'Comprar' }}
+        </button>
 
+        <!-- Formulário -->
+        <div *ngIf="produtoSelecionadoIndex === i" class="form-wrapper mt-4">
+          <form (ngSubmit)="finalizarCompra()" novalidate>
+
+            <!-- Campos -->
+            <div class="form-floating mb-3">
+              <input type="number" min="1" [(ngModel)]="dados.quantidade" name="quantidade" class="form-control" (change)="calcularTotal()" required />
+              <label>Quantidade</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" [(ngModel)]="dados.nome" name="nome" required />
+              <label>Nome completo</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="tel" class="form-control" [(ngModel)]="dados.telefone" name="telefone" required />
+              <label>Telefone com DDD</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" [(ngModel)]="dados.endereco" name="endereco" required />
+              <label>Endereço</label>
+            </div>
+
+            <!-- Entrega -->
+            <div class="form-floating mb-3">
+              <select class="form-select" [(ngModel)]="dados.tipoEntrega" name="tipoEntrega" (change)="verificarEntrega()" required>
+                <option value="" disabled selected>Escolha uma opção</option>
+                <option value="igreja">Retirar na igreja</option>
+                <option value="entrega">Entrega em casa</option>
+              </select>
+              <label>Tipo de Entrega</label>
+            </div>
+
+            <div *ngIf="dados.tipoEntrega === 'entrega'" class="form-floating mb-3">
+              <input class="form-control" [(ngModel)]="dados.cep" name="cep" placeholder="CEP" (blur)="calcularFrete()" />
+              <label>CEP</label>
+              <div *ngIf="frete !== null" class="form-text text-warning">Frete: R$ {{ frete | number:'1.2-2' }}</div>
+            </div>
+
+            <!-- Pagamento -->
+            <div class="form-floating mb-3">
+              <select class="form-select" [(ngModel)]="dados.pagamento" name="pagamento" (change)="atualizarPagamento()" required>
+                <option value="">Selecione</option>
+                <option value="pix">Pix</option>
+                <option value="boleto">Boleto</option>
+                <option value="cartao">Cartão</option>
+              </select>
+              <label>Forma de Pagamento</label>
+            </div>
+
+            <!-- Parcelas -->
+            <div *ngIf="dados.pagamento === 'boleto' || dados.pagamento === 'cartao'" class="form-floating mb-3">
+              <select class="form-select" [(ngModel)]="dados.parcelas" name="parcelas" (change)="calcularTotal()" required>
+                <option *ngFor="let p of parcelas" [value]="p">{{p}}x</option>
+              </select>
+              <label>Parcelas</label>
+            </div>
+
+            <!-- Vencimentos boleto -->
+            <div *ngIf="dados.pagamento === 'boleto'" class="mb-3">
+              <label class="form-label">Data da 1ª parcela:</label>
+              <input type="date" [(ngModel)]="dados.vencimento" name="vencimento" class="form-control" (change)="gerarDatasParcelas()" required>
+              <ul class="list-unstyled mt-2" *ngIf="vencimentos.length">
+                <li *ngFor="let data of vencimentos">📆 {{ data }}</li>
+              </ul>
+            </div>
+
+            <!-- Aviso - boleto -->
+            <div *ngIf="dados.pagamento === 'boleto'" class="alert alert-warning">
+              ⚠️ O pedido será entregue <strong>somente após o pagamento da última parcela</strong>.
+            </div>
+
+            <!-- Aviso - cartão -->
+            <div *ngIf="dados.pagamento === 'cartao'" class="alert alert-warning">
+              🕒 O pedido será enviado após a <strong>confirmação do pagamento final</strong>.
+            </div>
+
+            <!-- Pix -->
+           <!-- Pix -->
+<div *ngIf="dados.pagamento === 'pix'" class="alert alert-light border text-start">
+  <p class="mb-1"><strong>Chave Pix:</strong></p>
+  <code id="chavePix" class="d-block mb-2">123.456.789/0001-87</code>
+  <button type="button" class="btn btn-outline-secondary btn-sm" (click)="copiarPix()">📋 Copiar chave Pix</button>
+
+  <p class="mt-3">💰 Total a pagar: <strong>R$ {{ total | number:'1.2-2' }}</strong></p>
+
+  <p class="text-success mt-2 small">
+    Após o pagamento, envie o comprovante para o WhatsApp: <a href="https://wa.me/5511958398723" target="_blank">11 95839-8723</a>
+  </p>
+
+  <div *ngIf="pixCopiado" class="alert alert-info py-1 mt-2">
+    ✅ Pix copiado com sucesso!
+  </div>
 </div>
 
-</body>
-</html>
+
+            <!-- Valor por parcela -->
+            <div *ngIf="(dados.pagamento === 'boleto' || dados.pagamento === 'cartao') && valorParcela > 0">
+              <p class="mt-3">💳 Valor por parcela: <strong>R$ {{ valorParcela | number:'1.2-2' }}</strong></p>
+            </div>
+
+            <!-- Ações -->
+            <div class="d-grid gap-2 mt-4">
+              <button class="btn btn-primary" type="submit">💬 Confirmar Pedido</button>
+              <button class="btn btn-outline-danger" type="button" (click)="cancelar()">❌ Cancelar</button>
+            </div>
+          </form>
+
+          <!-- Confirmação -->
+          <div *ngIf="pedidoEnviado" class="alert alert-success mt-4">
+            ✅ Pedido enviado com sucesso. Aguardando pagamento!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
