@@ -6,7 +6,6 @@ import { MenuComponent } from './pagina/menu/menu.component';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   imports: [

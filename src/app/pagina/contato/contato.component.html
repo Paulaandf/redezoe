@@ -1,85 +1,73 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Encontre sua Célula</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    #sorteio {
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 20px;
-      height: 40px;
-    }
-  </style>
-</head>
-<body class="p-4">
+<div class="container mt-5 p-4 shadow rounded bg-light">
+  <h1 class="text-center text-primary mb-4">Bem-vindo às Células</h1>
 
-  <h1>Encontrei a sua célula aqui</h1>
+  <p class="lead text-center">
+    As células são pequenos grupos que se reúnem semanalmente para estudar a Bíblia, compartilhar experiências e fortalecer a fé em comunhão. 
+    Escolha uma categoria para encontrar a célula ideal para você!
+  </p>
 
-  <form id="form">
-    <div class="form-group">
-      <label for="nome">Nome</label>
-      <input type="text" id="nome" class="form-control">
+  <!-- Lista de categorias como botões -->
+  <div class="d-flex justify-content-center gap-3 mb-4 flex-wrap">
+    <button
+      class="btn btn-outline-primary"
+      *ngFor="let categoria of categorias"
+      (click)="selecionarCategoria(categoria.tipo)">
+      {{ categoria.titulo }}
+    </button>
+  </div>
+
+  <!-- Botão voltar, aparece só se tiver categoria selecionada -->
+  <div *ngIf="categoriaSelecionada" class="mb-3 text-center">
+    <button class="btn btn-secondary" (click)="categoriaSelecionada = null; celulaSelecionada = null;">
+      ← Voltar às categorias
+    </button>
+  </div>
+
+  <!-- Lista de células da categoria selecionada -->
+  <div *ngIf="categoriaSelecionada">
+    <h3 class="text-primary mb-3 text-center">{{ getTituloCategoria(categoriaSelecionada) }}</h3>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+      <div class="col" *ngFor="let celula of celulasPorCategoria[categoriaSelecionada]">
+        <div
+          class="card border-primary h-100"
+          style="cursor:pointer"
+          (click)="selecionarCelula(celula)">
+          <div class="card-body">
+            <h5 class="card-title text-primary">{{ celula.nome }}</h5>
+            <p class="card-text text-muted small">Clique para ver detalhes</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label for="tel">Telefone</label>
-      <input type="tel" id="tel" class="form-control">
+  <!-- Detalhes da célula selecionada -->
+  <div *ngIf="celulaSelecionada" class="card mt-5 bg-light text-dark shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <strong>Informações da Célula Selecionada</strong>
     </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ celulaSelecionada.nome }}</h5>
+      <p><strong>Líder:</strong> {{ celulaSelecionada.lider }}</p>
+      <p><strong>Telefone:</strong> {{ celulaSelecionada.telefone }}</p>
+      <p><strong>Endereço:</strong> {{ celulaSelecionada.endereco }}</p>
+      <p><strong>Dia da Semana:</strong> {{ celulaSelecionada.dia }}</p>
+      <p><strong>História:</strong> {{ celulaSelecionada.historia }}</p>
 
-    <div class="form-group">
-      <label for="cep">CEP</label>
-      <input type="text" id="cep" class="form-control">
+      <hr>
+
+      <h5>Agende uma Visita</h5>
+      <form (submit)="agendarVisita($event)">
+        <div class="mb-3">
+          <label for="nome" class="form-label">Seu nome</label>
+          <input type="text" id="nome" class="form-control" [(ngModel)]="agendamento.nome" name="nome" required />
+        </div>
+        <div class="mb-3">
+          <label for="whatsapp" class="form-label">Seu WhatsApp</label>
+          <input type="tel" id="whatsapp" class="form-control" [(ngModel)]="agendamento.whatsapp" name="whatsapp" required placeholder="+55 (xx) xxxxx-xxxx" />
+        </div>
+        <button type="submit" class="btn btn-success">Enviar WhatsApp</button>
+      </form>
     </div>
-
-    <button type="submit" class="btn btn-outline-success">Enviar</button>
-  </form>
-
-  <h2 class="mt-5">Células perto de você</h2>
-  <div id="sorteio"></div>
-
-  <script>
-    const celulas = [
-      "Célula Vida Nova",
-      "Célula Sementes",
-      "Célula Ágape",
-      "Célula Recomeço",
-      "Célula Avivamento",
-      "Célula Raízes",
-      "Célula Aliança",
-      "Célula Esperança"
-    ];
-
-    const cepInput = document.getElementById("cep");
-    const sorteioEl = document.getElementById("sorteio");
-
-    let intervalo;
-
-    cepInput.addEventListener("input", () => {
-      if (cepInput.value.length >= 8) {
-        iniciarSorteio();
-      }
-    });
-
-    function iniciarSorteio() {
-      clearInterval(intervalo);
-
-      let count = 0;
-      intervalo = setInterval(() => {
-        const index = Math.floor(Math.random() * celulas.length);
-        sorteioEl.textContent = celulas[index];
-        count++;
-
-        if (count > 20) {
-          clearInterval(intervalo);
-          // Aqui você pode usar a lógica real baseada no CEP
-          const finalIndex = Math.floor(Math.random() * celulas.length);
-          sorteioEl.textContent = "🏡 " + celulas[finalIndex];
-        }
-      }, 100);
-    }
-  </script>
-
-</body>
-</html>
+  </div>
+</div>

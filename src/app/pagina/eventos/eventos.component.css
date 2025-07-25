@@ -1,0 +1,30 @@
+/* Texto geral azul escuro */
+.container {
+  color: #003366; /* azul escuro forte */
+}
+
+/* Labels */
+label.form-label {
+  color: #003366;
+  font-weight: 600;
+}
+
+/* Inputs e selects - texto azul escuro */
+input.form-control, select.form-select {
+  color: #003366;
+}
+
+/* Listagem de parcelas - texto azul escuro */
+.list-group-item {
+  color: #003366;
+}
+
+/* Alertas - texto azul escuro */
+.alert-success, .alert-warning, .alert-danger {
+  color: #003366;
+}
+
+/* Títulos (h1, h4, h5, h6) */
+h1, h4, h5, h6 {
+  color: #003366;
+}

@@ -1,1 +1,81 @@
-/* You can add global styles to this file, and also import other style files */
+/* 🌟 Estilo Global Equilibrado - Rede Zoe 🌟 */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #0076FF, #C300FF);
+  min-height: 100vh;
+}
+
+/* Títulos */
+h1, h2, h3 {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Caixa central de conteúdo */
+.container, .devocional-box {
+  background-color: #ffffff;
+  color: #333;
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 700px;
+  margin: 40px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Versículo com destaque */
+.versiculo-box {
+  background-color: #f3f0ff;
+  border-left: 5px solid #C300FF;
+  padding: 15px;
+  font-style: italic;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Inputs e textarea */
+input.form-control, textarea.form-control {
+  background-color: #fdfdfd;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Botões */
+.btn-primary {
+  background-color: #0076FF;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0059cc;
+}
+
+/* Botão alternativo */
+.btn-outline-success {
+  border-color: #00c853;
+  color: #00c853;
+  font-weight: bold;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.btn-outline-success:hover {
+  background-color: #00c853;
+  color: white;
+}
+
+/* Texto leve */
+.text-muted {
+  color: #777 !important;
+}
